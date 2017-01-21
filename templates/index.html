@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title>Object status</title>
+<style>
+</style>
+  </head>
+  <body>
+    <h1>Object changes</h1>
+    <h2>Query</h2>
+    <form action="/" method="get" enctype="multipart/form-data">
+      <table>
+        <tr>
+          <td>Object Id</td>
+          <td><input type="text" name="object_id"/></td>
+        </tr>
+        <tr>
+          <td>Object Type</td>
+          <td><input type="text" name="object_type"/></td>
+        </tr>
+        <tr>
+          <td>Timestamp</td>
+          <td><input type="text" name="timestamp"/></td>
+        </tr>
+      </table>
+      <input type="submit" value="Submit"/>
+    </form>
+
+    {% if status %}
+    <h2>Status</h2>
+    <p>{{ status }}</p>
+    {% endif %}
+
+    <h2>Upload object changes CSV</h2>
+    <form action="upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept="csv"/>
+      <input type="submit" value="Upload">
+    </form>
+
+    <h2>Last 20 changes</h2>
+    <form action="/clear_db" method="post">
+      <input type="submit" value="Clear entire DB"/>
+    </form>
+
+    <table>
+      <tr>
+        <th>object_id</th>
+        <th>object_type</th>
+        <th>timestamp</th>
+        <th>object_changes</th>
+      </tr>
+      {% for item in changes %}
+      <tr>
+        <td>{{ item.object_id }}</td>
+        <td>{{ item.object_type }}</td>
+        <td>{{ item.datetime }}</td>
+        <td>{{ item.changes }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
